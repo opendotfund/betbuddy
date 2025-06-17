@@ -1,0 +1,6 @@
+{
+  "name": "Betting Buddy",
+  "description": "An AI-powered app to analyze your sports bet screenshots, offering insights based on player data and odds. Limited daily checks.",
+  "requestFramePermissions": [],
+  "prompt": ""
+}
