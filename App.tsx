@@ -108,9 +108,9 @@ const App: React.FC = () => {
   return (
     <div className="min-h-screen flex flex-col bg-slate-900 text-slate-100">
       <Header checksRemaining={betChecksRemaining} />
-      <main className="flex-grow container mx-auto px-4 py-8 flex flex-col items-center w-full">
-        <div className="w-full max-w-2xl flex flex-col flex-grow mb-4">
-            <ChatMessages messages={chatMessages} isLoading={showTypingIndicator} />
+      <main className="flex-1 container mx-auto px-4 py-4 flex flex-col items-center">
+        <div className="w-full max-w-2xl flex flex-col h-[calc(100vh-350px)]">
+          <ChatMessages messages={chatMessages} isLoading={showTypingIndicator} />
         </div>
         
         {betChecksRemaining > 0 ? (
@@ -120,8 +120,8 @@ const App: React.FC = () => {
             <LimitMessage />
           </div>
         )}
-        <Disclaimer /> {/* Added Disclaimer component */}
-        <ImageUpload /> {/* This is the premium placeholder */}
+        <Disclaimer />
+        <ImageUpload />
       </main>
       <Footer />
     </div>

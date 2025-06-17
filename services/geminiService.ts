@@ -1,13 +1,12 @@
-
 import { GoogleGenAI, GenerateContentResponse, Content } from "@google/genai";
 import { GEMINI_MODEL_NAME, GEMINI_API_KEY } from '../constants';
 
 let ai: GoogleGenAI | null = null;
 let initializationError: string | null = null;
 
-// Check if the API key is the placeholder
-if (GEMINI_API_KEY === "YOUR_GEMINI_API_KEY_HERE") {
-  initializationError = "API Key not configured. Please replace 'YOUR_GEMINI_API_KEY_HERE' in constants.ts with your actual Gemini API key.";
+// Check if the API key is valid
+if (!GEMINI_API_KEY || GEMINI_API_KEY.trim() === '') {
+  initializationError = "API Key not configured. Please set your Gemini API key in constants.ts";
   console.error(initializationError);
 } else {
   try {
@@ -53,20 +52,35 @@ Your task is to analyze the sports bet described by the user.
     *   Discuss relevant factors: team/player form, head-to-head (if generally known), injuries (if major and public), situational factors.
     *   If odds are given, comment briefly on perceived value.
 
-3.  **Offer Opinion:**
+3.  **Calculate Confidence Score:**
+    *   Analyze all available factors and assign a confidence score (0-100%).
+    *   If odds are provided, use them as a baseline but adjust based on your analysis.
+    *   If odds aren't provided, base the score purely on your analysis of the situation.
+    *   Consider factors like:
+        - Historical performance
+        - Current form
+        - Matchup advantages/disadvantages
+        - External factors (injuries, weather, etc.)
+        - Value relative to odds (if provided)
+
+4.  **Offer Opinion:**
     *   Conclude with whether the bet seems promising, risky, or has mixed aspects.
     *   Explain your reasoning clearly and concisely.
 
-4.  **Interaction:**
-    *   If the description is vague, ask clarifying questions to get more details (e.g., "What are the odds?", "Which player are you referring to for the prop bet?").
-    *   Maintain a helpful, analytical, and slightly engaging tone.
+5.  **Response Format:**
+    *   Start with a brief overview of the bet
+    *   Provide detailed analysis in the middle
+    *   End with a clear conclusion that includes:
+        - Your confidence score (X%)
+        - A brief explanation of the score
+        - Final recommendation
 
-**Output Format:**
-*   Respond conversationally.
-*   Use paragraphs for explanations and bullet points for lists if it helps clarity.
-*   Address the user directly.
-
-Do not invent data or odds not provided by the user. Be objective.
+**Important Notes:**
+*   If the description is vague, ask clarifying questions to get more details.
+*   Maintain a helpful, analytical, and slightly engaging tone.
+*   Do not invent data or odds not provided by the user.
+*   Always provide a confidence score, even if odds aren't available.
+*   Be objective and explain your reasoning clearly.
   `;
 
   try {
